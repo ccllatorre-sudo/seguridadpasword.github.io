@@ -59,7 +59,7 @@
             border: 1px solid #ccc;
             border-radius: 4px;
             font-size: 1.1em;
-            box-sizing: border-box; /* Asegura que el padding no desborde en móvil */
+            box-sizing: border-box; 
         }
         button {
             padding: 10px 15px;
@@ -94,19 +94,26 @@
             color: #666;
         }
 
-        /* --- NUEVO ESTILO PARA EL BOTÓN MOSTRAR/OCULTAR --- */
+        /* --- NUEVO ESTILO: Contenedor y Toggle para el icono de ojo --- */
         .password-container {
             position: relative;
         }
         .password-toggle {
             position: absolute;
             right: 15px; /* Ajuste para el padding del contenedor */
-            top: 15px;
+            top: 12px; /* Alineación vertical */
             cursor: pointer;
-            color: #1976D2;
-            font-weight: bold;
-            font-size: 0.9em;
-            padding: 5px; /* Área de clic más grande para móvil */
+            color: #666;
+            font-size: 1.4em; /* Tamaño del icono */
+            padding: 5px; 
+            background: none;
+            border: none;
+            line-height: 1; /* Para centrar el icono emoji */
+        }
+        /* Ajuste para que el input respete el icono */
+        #evaluar-input {
+            padding-right: 40px !important; /* Deja espacio para el icono de ojo */
+            width: 100% !important; /* Asegura el ancho correcto */
         }
 
         /* --- EVALUADOR ESPECÍFICO --- */
@@ -193,9 +200,9 @@
         <p>Introduce tu contraseña para evaluarla:</p>
         
         <div class="password-container">
-            <input type="password" id="evaluar-input" placeholder="Escribe aquí tu contraseña" onkeyup="evaluarContrasenaWeb()" style="width: 100%; padding-right: 80px;">
-            <span id="toggle-evaluar" onclick="togglePasswordVisibility()" class="password-toggle">
-                MOSTRAR
+            <input type="password" id="evaluar-input" placeholder="Escribe aquí tu contraseña" onkeyup="evaluarContrasenaWeb()">
+            <span id="toggle-evaluar" onclick="togglePasswordVisibility()" class="password-toggle" title="Mostrar contraseña">
+                👁️
             </span>
         </div>
         <div class="fortaleza-bar">
@@ -431,17 +438,19 @@
         fillBar.textContent = `${puntuacion}/${puntuacion_maxima}`;
     }
 
-    // --- NUEVA FUNCIÓN: MOSTRAR/OCULTAR CONTRASEÑA ---
+    // --- FUNCIÓN: MOSTRAR/OCULTAR CONTRASEÑA con Icono ---
     function togglePasswordVisibility() {
         const passwordInput = document.getElementById('evaluar-input');
         const toggleButton = document.getElementById('toggle-evaluar');
 
         if (passwordInput.type === 'password') {
             passwordInput.type = 'text';
-            toggleButton.textContent = 'OCULTAR';
+            toggleButton.textContent = '🙈'; // Ojo tachado (Ocultar)
+            toggleButton.title = 'Ocultar contraseña';
         } else {
             passwordInput.type = 'password';
-            toggleButton.textContent = 'MOSTRAR';
+            toggleButton.textContent = '👁️'; // Ojo abierto (Mostrar)
+            toggleButton.title = 'Mostrar contraseña';
         }
     }
     // --------------------------------------------------
