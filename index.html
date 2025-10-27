@@ -59,6 +59,7 @@
             border: 1px solid #ccc;
             border-radius: 4px;
             font-size: 1.1em;
+            box-sizing: border-box; /* Asegura que el padding no desborde en móvil */
         }
         button {
             padding: 10px 15px;
@@ -91,6 +92,21 @@
             font-style: italic;
             text-align: center;
             color: #666;
+        }
+
+        /* --- NUEVO ESTILO PARA EL BOTÓN MOSTRAR/OCULTAR --- */
+        .password-container {
+            position: relative;
+        }
+        .password-toggle {
+            position: absolute;
+            right: 15px; /* Ajuste para el padding del contenedor */
+            top: 15px;
+            cursor: pointer;
+            color: #1976D2;
+            font-weight: bold;
+            font-size: 0.9em;
+            padding: 5px; /* Área de clic más grande para móvil */
         }
 
         /* --- EVALUADOR ESPECÍFICO --- */
@@ -175,8 +191,13 @@
     <div id="evaluador" class="seccion-contenido">
         <h3>📈 Evaluador de Fortaleza de Contraseñas</h3>
         <p>Introduce tu contraseña para evaluarla:</p>
-        <input type="password" id="evaluar-input" placeholder="Escribe aquí tu contraseña" onkeyup="evaluarContrasenaWeb()">
         
+        <div class="password-container">
+            <input type="password" id="evaluar-input" placeholder="Escribe aquí tu contraseña" onkeyup="evaluarContrasenaWeb()" style="width: 100%; padding-right: 80px;">
+            <span id="toggle-evaluar" onclick="togglePasswordVisibility()" class="password-toggle">
+                MOSTRAR
+            </span>
+        </div>
         <div class="fortaleza-bar">
             <div id="fortaleza-fill" class="fortaleza-fill" style="width: 0%; background-color: #ccc;"></div>
         </div>
@@ -409,6 +430,21 @@
         fillBar.style.backgroundColor = color;
         fillBar.textContent = `${puntuacion}/${puntuacion_maxima}`;
     }
+
+    // --- NUEVA FUNCIÓN: MOSTRAR/OCULTAR CONTRASEÑA ---
+    function togglePasswordVisibility() {
+        const passwordInput = document.getElementById('evaluar-input');
+        const toggleButton = document.getElementById('toggle-evaluar');
+
+        if (passwordInput.type === 'password') {
+            passwordInput.type = 'text';
+            toggleButton.textContent = 'OCULTAR';
+        } else {
+            passwordInput.type = 'password';
+            toggleButton.textContent = 'MOSTRAR';
+        }
+    }
+    // --------------------------------------------------
 
     // --- LÓGICA DEL QUIZ DE PHISHING ---
     function verResultadoPhishing() {
